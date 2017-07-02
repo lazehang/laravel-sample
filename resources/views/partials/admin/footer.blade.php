@@ -18,9 +18,9 @@
 <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
 <!-- Morris.js charts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-<script src="{{ asset('assets/plugins/morris/morris.min.js') }}"></script>
+<!-- <script src="{{ asset('assets/plugins/morris/morris.min.js') }}"></script> -->
 <!-- Sparkline -->
-<script src="{{ asset('assets/plugins/sparkline/jquery.sparkline.min.js') }}'"></script>
+<script src="{{ asset('assets/plugins/sparkline/jquery.sparkline.min.js') }}"></script>
 <!-- jvectormap -->
 <script src="{{ asset('assets/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
@@ -52,11 +52,13 @@
             dataType: 'html',
             beforeSend: function () {
                 $container = field;
-                response = "<tr><td>HELLO</td></tr>";
-                $container.append(response);
+                $container.append('<div class="newfield"></div>');
+                response = "<form role='form' action='{{ route('addHeading') }}' method='post'><small>New Heading</small><div class='form-group'><input type='text' name='heading' class='form-control' value='' required></div><input type='hidden' name='_token' id='csrf-token' value='{{ Session::token() }}' /><button class='addbtn btn btn-primary btn-sm' type='submit'>Add</button>|<a href='javascript:void(0);' class='deletebtn btn btn-danger btn-sm'>delete</button></form>";
+                console.log(response);
+                $('.newfield').last().append(response);
+        
             },
             success: function (response) {
-                alert('here');
             },
             error: function (response) {
 
@@ -66,8 +68,14 @@
 
     $(document).on('click', '.add', function (e) {
         e.preventDefault();
-        var field = $('.field');
+        var field = $('#newfield');
         updateHeading(field);
 
     });
+
+    $(document).on('click', '.deletebtn', function () {
+        $('.newfield').last().remove();
+
+    });
+  
 </script>

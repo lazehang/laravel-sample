@@ -23,11 +23,17 @@ class AdminController extends Controller
         $topic = Topic::all()->first();
         if (count($topic) > 0){
             $topic = Topic::find($topic->id);
-            $topic->update(['description' => $request['desc']]);
-            return redirect()->back()->with('success', 'Updated !!');
+            $topic->desc = $request->desc;
+            $topic->save();
+            if ($topic->save())
+            {
+                return redirect()->back()->with('success', 'Updated !!');
+            }
         }
         else {
-            Topic::create(['description' => $request->desc]);
+            $topic = new Topic();
+            $topic->desc = $request->desc;
+            $topic->save();
             return redirect()->back()->with('success', 'Post Created !!');
         }
     }
@@ -39,5 +45,25 @@ class AdminController extends Controller
         if($heading){
             return redirect()->back();
         }
+    }
+
+    function addHeading(Request $request)
+    {
+        $heading = new Content();
+        $heading->heading = $request['heading'];
+        $heading->save();
+
+        if ($heading) {
+            return redirect()->back()->with('success', 'Headings Added');
+        }
+
+    }
+
+    public function delete($id)
+    {
+        $heading = Content::find($id);
+        $heading->delete();
+
+        return redirect()->back();
     }
 }

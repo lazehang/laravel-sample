@@ -44,20 +44,19 @@
         <div class="intro">
             <h2 class="title">Welcome To Laravel Learning Class</h2>
             <p class="paragraph">
-                {!! $desc->description !!}
+                    {!! $desc->desc !!}
             </p>
         </div>
 
         <div class="services">
             <h2 class="title">Series Lessons</h2>
-           @if (!empty($contents))
+           @if (isset($contents))
                 <ul>
                     @foreach($contents as $content)
                         <li>{{ $content->heading }}</li>
                     @endforeach
                 </ul>
-            @endif
-            @if (empty($contents))
+            @else
                    <h2 class="text-danger text-center">No Contents !!</h2>
             @endif
         </div>

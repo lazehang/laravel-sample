@@ -17,12 +17,15 @@ Route::group(['prefix' => '/'], function () {
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'],function () {
-    Route::get('/',[ 'as' => 'index', 'uses' => 'AdminController@index']);
+    Route::get('/', 'AdminController@home');
     Route::get('home',[ 'as' => 'home', 'uses' => 'AdminController@home']);
     Route::post('post', [ 'as' => 'post', 'uses' => 'AdminController@post']);
     Route::post('updateHead/{id}', [ 'as' => 'updateHead', 'uses' => 'AdminController@updateHead']);
+    Route::post('addHeading', [ 'as' => 'addHeading', 'uses' => 'AdminController@addHeading']);
+    Route::get('delete/{id}',[ 'as' => 'delete', 'uses' => 'AdminController@delete']);
+
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
